@@ -19,7 +19,6 @@ class ControlDashboard
     //VISTA EN DONDE SE CARGARA LOS DATOS AUTOMATICAMENTE 
     public function Dashboard()
     {
-
         $prioridad = $this->SOLICITUD->prioridad();
         $categoria = $this->SOLICITUD->categoria();
         $piso = $this->SOLICITUD->piso();

@@ -58,10 +58,10 @@
                                         <label for="cbo_detalle" class="form-label">Detalle (opcional)</label>
                                         <textarea class="form-control" name="cbo_detalle" id="cbo_detalle" placeholder="breve detalle"></textarea>
                                     </div>
-                                    <!-- <div class="col-md-12">
+                                    <div class="col-md-12">
                                         <label for="cbo_imagen" class="form-label">Imagen</label>
                                         <input type="file" class="form-control" name="cbo_imagen" id="cbo_imagen" accept="image/">
-                                    </div> -->
+                                    </div>
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-primary" id="btn-registrar-solicitud" name="btn-registrar-solicitud">Crear Solicitud</button>
                                     </div>

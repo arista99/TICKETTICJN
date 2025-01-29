@@ -27,7 +27,7 @@ class ModeloDashboard
                    INNER JOIN estado AS e ON ti.id_esta=e.id_esta
                    INNER JOIN piso AS p ON ti.id_piso=p.id_piso
                    LEFT JOIN tecnico AS te ON ti.id_tec=te.id_tec
-                   ORDER BY ti.id_ticket ASC";
+                   WHERE ti.id_esta = '4'ORDER BY ti.id_ticket ASC";
             $stm = $this->MYSQL->ConectarBD()->prepare($sql);
             $stm->execute();
             return $stm->fetchAll(PDO::FETCH_OBJ);
