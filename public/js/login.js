@@ -1,35 +1,39 @@
-//LOGEO DE USUARIO VIA AJAX
-$('#btn-login').click(function () {
-    let datos = $('#frmAjaxLogin').serialize();
-    // console.log(datos);
+$('#btn-loginU').click(function (event) {
+    event.preventDefault(); // Evita que el formulario se envíe automáticamente
+    
+    let datos = $('#frmAjaxLogin').serialize(); // Serializa los datos del formulario
+
     $.ajax({
         type: 'POST',
-        url: 'Login',
+        url: 'Login', // Ruta del controlador PHP
         data: datos,
-        success: function (r) {
-            if (r == 1) {
-                console.log('Numero de Retorno : ' + r);
+        dataType: 'json', // Indicamos que esperamos un JSON
+        success: function (response) {
+            if (response.status === "success") {
                 Swal.fire({
-                    position: 'top-end',
                     icon: 'success',
-                    title: 'BIENVENID@',
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: 'Bienvenido',
+                    timer: 1500,
+                    showConfirmButton: false
                 }).then(function () {
-                    window.location = "habitacion"; //CAMBIAR POR "PROFILE"
+                    window.location.href = response.redirect; // Redirige según el rol
                 });
-            } else if (r == 0){
+            } else {
                 Swal.fire({
-                    position: 'top-end',
                     icon: 'error',
-                    title: 'Sus credenciales estan incorrectas!!!!',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(function () {
-                    window.location = "Index";
+                    title: response.message,
+                    timer: 2000,
+                    showConfirmButton: false
                 });
             }
+        },
+        error: function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error en la conexión',
+                timer: 2000,
+                showConfirmButton: false
+            });
         }
-    })
-    return false;
+    });
 });

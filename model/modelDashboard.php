@@ -20,9 +20,10 @@ class ModeloDashboard
     public function ticket()
     {
         try {
-            $sql = "SELECT  ti.id_ticket,ti.num_ticket, ti.descrip_ticket,ti.descrip_ticket,u.nom_usu,t.nom_tipo,e.nom_esta,p.num_piso,te.nom_tec
+            $sql = "SELECT  ti.id_ticket,ti.num_ticket, ti.descrip_ticket,ti.descrip_ticket,u.nom_usu,t.nom_tipo,e.nom_esta,p.num_piso,te.nom_tec,a.nom_area
                      FROM ticket AS ti
                     INNER JOIN usuario AS u ON ti.id_usu=u.id_usu
+                    INNER JOIN area AS a ON a.id_area=u.id_area
                    INNER JOIN tipo AS t ON ti.id_tipo=t.id_tipo
                    INNER JOIN estado AS e ON ti.id_esta=e.id_esta
                    INNER JOIN piso AS p ON ti.id_piso=p.id_piso

@@ -20,7 +20,7 @@ class ControlLogin
     }
     public function LoginUsuario()
     {
-            include_once('view/login.php');
+        include_once('view/login.php');
     }
 
     public function Login()
@@ -32,28 +32,33 @@ class ControlLogin
             $login->setpass_tec($_POST['contrasena']);
 
             $acceso = $this->LOGIN->logeo($login);
-            // var_dump($acceso);
-            // exit;
             if ($acceso) {
                 session_start();
                 $_SESSION["id_tec"] = $acceso->id_tec;
                 $_SESSION["nom_tec"] = $acceso->nom_tec;
-                $_SESSION["pass_tec"] = $acceso->pass_tec;
                 $_SESSION["id_rol"] = $acceso->id_rol;
-            
-                // Redirigir según el rol
-                if($_SESSION["id_rol"] == 1){
-                    //Administrador
-                    include_once("view/administrador/dashboard/controladministrador.php");
+
+                // Definir la URL de redirección según el rol
+                $redirectUrl = "";
+                if ($_SESSION["id_rol"] == 1) {
+                    $redirectUrl = "visorAdministrador"; // Administrador
                 } elseif ($_SESSION["id_rol"] == 2) {
-                    //Soporte
-                    include_once("view/soporte/dashboard/controladministrador.php");
-                } else{
-                    include_once('view/login.php');
+                    $redirectUrl = "controlsoporte.php"; // Soporte
+                } else {
+                    $redirectUrl = "view/login.php"; // Usuario general
                 }
-            
+
+                // Devolver respuesta JSON para AJAX
+                echo json_encode([
+                    "status" => "success",
+                    "redirect" => $redirectUrl
+                ]);
+            } else {
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Credenciales incorrectas"
+                ]);
             }
-        
         } catch (Exception $th) {
             echo $th->getMessage();
         }
@@ -62,13 +67,27 @@ class ControlLogin
     public function Close()
     {
         try {
+            // Iniciar sesión
             session_start();
-            $_SESSION['CONTROL'] = 0;
-            $_SESSION['CONTROL'] = '';
-            include_once('view/login.php');
+
+            // Destruir todas las variables de sesión
+            $_SESSION = [];
+
+            // Destruir la sesión
+            session_destroy();
+
+
+            // Eliminar la cookie de sesión si se usa
+            if (ini_get("session.use_cookies")) {
+                $params = session_get_cookie_params();
+                setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+            }
+
+            // Redirigir al usuario a la página de login
+            header("Location: LoginUsuario");
+            exit;
         } catch (Exception $th) {
             throw $th->getMessage();
         }
     }
-
 }

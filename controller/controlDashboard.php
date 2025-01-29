@@ -16,9 +16,42 @@ class ControlDashboard
         $this->SOLICITUD = new ModeloDashboard();
     }
 
-    //VISTA EN DONDE SE CARGARA LOS DATOS AUTOMATICAMENTE 
-    public function Dashboard()
+
+    public function DashboardControl()
     {
+        // Iniciar sesión
+        session_start();
+
+        // Verificar si el usuario está autenticado
+        if (!isset($_SESSION['id_tec'])) {
+            // Redirigir al login si no está autenticado
+            header("Location: LoginUsuario");
+            exit;
+        }
+
+        $prioridad = $this->SOLICITUD->prioridad();
+        $categoria = $this->SOLICITUD->categoria();
+        $piso = $this->SOLICITUD->piso();
+        $tecnico = $this->SOLICITUD->tecnico();
+        $estado = $this->SOLICITUD->estado();
+        $tipo = $this->SOLICITUD->tipo();
+
+        include_once('view/administrador/dashboard/controladministrador.php');
+    }
+
+    //VISTA EN DONDE SE CARGARA LOS DATOS AUTOMATICAMENTE 
+    public function visorAdministrador()
+    {
+        // Iniciar sesión
+        session_start();
+
+        // Verificar si el usuario está autenticado
+        if (!isset($_SESSION['id_tec'])) {
+            // Redirigir al login si no está autenticado
+            header("Location: LoginUsuario");
+            exit;
+        }
+        
         $prioridad = $this->SOLICITUD->prioridad();
         $categoria = $this->SOLICITUD->categoria();
         $piso = $this->SOLICITUD->piso();
@@ -38,6 +71,7 @@ class ControlDashboard
             echo '    <td class="text-primary text-center">' . $data->num_ticket . '</td>';
             echo '    <td class="text-primary text-center">' . $data->nom_usu . '</td>';
             echo '    <td class="text-primary text-center">' . $data->num_piso . '</td>';
+            echo '    <td class="text-primary text-center">' . $data->nom_area . '</td>';
             echo '    <td class="text-primary text-center">' . $data->descrip_ticket . '</td>';
             echo '    <td class="text-primary text-center">' . $data->nom_tipo . '</td>';
             echo '    <td class="text-primary text-center">' . $data->nom_tec . '</td>';
@@ -72,40 +106,6 @@ class ControlDashboard
                     echo json_encode(['success' => true, 'message' => 'Ticket actualizado correctamente']);
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Error al actualizar el ticket']);
-                }
-            } else {
-                // Si no es una solicitud POST, enviar un mensaje de error
-                echo json_encode(['success' => false, 'message' => 'Método no permitido']);
-
-                // if ($update) {
-                //     // header('Location:Dashboard');
-                // } else {
-                //     // header('Location:Dashboard');
-                // }
-            }
-        } catch (Exception $th) {
-            // Manejo de excepciones: devolver el mensaje de error
-            echo json_encode(['success' => false, 'message' => $th->getMessage()]);
-            // echo $th->getMessage();
-        }
-    }
-
-    public function filtrarxSolicitud()
-    {
-        try {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Capturar los datos enviados por AJAX
-                $buscador = isset($_POST['buscador']) ? trim($_POST['buscador']) : '';
-                $piso = isset($_POST['piso']) ? trim($_POST['piso']) : '';
-                $tecnico = isset($_POST['tecnico']) ? trim($_POST['tecnico']) : '';
-                $tipo = isset($_POST['tipo']) ? trim($_POST['tipo']) : '';
-                //llmando al inser de modelo solicitud
-                $tickets  = $this->SOLICITUD->filtrarSolicitud($buscador, $piso, $tecnico, $tipo);
-                // Responder con JSON para que AJAX pueda manejar la respuesta
-                if ($tickets) {
-                    echo json_encode(['success' => true, 'data' => $tickets]);
-                } else {
-                    echo json_encode(['success' => false, 'message' => 'No se encontraron resultados']);
                 }
             } else {
                 // Si no es una solicitud POST, enviar un mensaje de error

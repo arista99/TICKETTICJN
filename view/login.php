@@ -1,58 +1,38 @@
 <?php include_once('view/templates/head.php'); ?>
-<div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-6 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-5 shadow-lg my-5"> 
-                   
-                    <div class="card-body pb-2">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">¡BIENVENIDOS!</h1>
-                                    </div>
-                                    <form id="frmAjaxLogin" class="user"> 
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                id="usuario" name="usuario" aria-describedby="emailHelp"
-                                                placeholder="Usuario">
-                                        </div>
-                                       
-                                        <div class="form-group">
-                                            <input type="password" id="contrasena" name="contrasena" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Contraseña">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Recordar</label>
-                                            </div>
-                                        </div>
-                                       
-
-                                        <input type="submit" id="btn-login" class="btn btn-primary btn-user btn-block" value="INGRESAR">
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Olvidaste la contraseña?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Crear una cuenta</a>
-                                    </div>
-                                </div>
-                            </div>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="row justify-content-center w-100">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">¡BIENVENIDO!</h1>
+                    </div>
+                    <form id="frmAjaxLogin" class="user">
+                        <div class="mb-4">
+                            <label for="usuario" class="form-label">Usuario</label>
+                            <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required>
                         </div>
+                        <div class="mb-4">
+                            <label for="contrasena" class="form-label">Contraseña</label>
+                            <input type="password" id="contrasena" name="contrasena" class="form-control" placeholder="Contraseña" required>
+                        </div>
+                        <!-- <div class="form-check mb-4">
+                            <input type="checkbox" class="form-check-input" id="customCheck">
+                            <label class="form-check-label" for="customCheck">Recordar</label>
+                        </div> -->
+                        <button id="btn-loginU" class="btn btn-primary w-100">INGRESAR</button>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="register.html">Crear una cuenta</a>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
-    <?php include_once('view/templates/footer.php'); ?>
+</div>
+
+<?php include_once('view/templates/footer.php'); ?>

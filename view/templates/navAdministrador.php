@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark color-nav">
+<nav class="navbar navbar-expand-lg navbar-white bg-white">
   <div class="container-fluid">
     <!-- Logo -->
     <a class="navbar-brand logo" href="#">
@@ -14,6 +14,17 @@
     <!-- Contenido del menú -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+        <!-- Otras opciones de menú (si necesitas) -->
+        <li class="nav-item">
+          <a class="nav-link" href="visorAdministrador">Alertas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="DashboardControl">Control de Incidencia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Control de Tiempos</a>
+        </li>
+
         <!-- Botón de cerrar sesión -->
         <li class="nav-item">
           <a href="Close" class="btn btn-danger ms-lg-3">Cerrar sesión</a>
@@ -22,3 +33,5 @@
     </div>
   </div>
 </nav>
+
+
