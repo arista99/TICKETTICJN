@@ -51,12 +51,25 @@ CREATE TABLE IF NOT EXISTS `estado` (
   PRIMARY KEY (`id_esta`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla cjn_ticket.estado: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla cjn_ticket.estado: ~4 rows (aproximadamente)
 INSERT INTO `estado` (`id_esta`, `nom_esta`) VALUES
 	(1, 'activo'),
-	(2, 'inactivo'),
-	(3, 'pausa'),
+	(2, 'cerrado'),
+	(3, 'observado'),
 	(4, 'pendiente');
+
+-- Volcando estructura para tabla cjn_ticket.incidencia
+CREATE TABLE IF NOT EXISTS `incidencia` (
+  `id_inci` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_inci` varchar(150) CHARACTER SET utf32 COLLATE utf32_spanish_ci DEFAULT NULL,
+  `email_inci` varchar(150) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`id_inci`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Volcando datos para la tabla cjn_ticket.incidencia: ~2 rows (aproximadamente)
+INSERT INTO `incidencia` (`id_inci`, `nom_inci`, `email_inci`) VALUES
+	(1, 'soporte', 'mesadeayudajn@sanpablo.com.pe'),
+	(2, 'infraestructura', 'infraestructura@sanpablo.com.pe');
 
 -- Volcando estructura para tabla cjn_ticket.piso
 CREATE TABLE IF NOT EXISTS `piso` (
@@ -92,20 +105,36 @@ INSERT INTO `prioridad` (`id_prio`, `nom_prio`) VALUES
 	(3, 'alta'),
 	(4, 'urgente');
 
+-- Volcando estructura para tabla cjn_ticket.roles
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id_rol` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_rol` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+  KEY `id_rol` (`id_rol`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Volcando datos para la tabla cjn_ticket.roles: ~2 rows (aproximadamente)
+INSERT INTO `roles` (`id_rol`, `nom_rol`) VALUES
+	(1, 'administrador'),
+	(2, 'soporte');
+
 -- Volcando estructura para tabla cjn_ticket.tecnico
 CREATE TABLE IF NOT EXISTS `tecnico` (
   `id_tec` int(11) NOT NULL AUTO_INCREMENT,
   `nom_tec` varchar(250) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
-  PRIMARY KEY (`id_tec`)
+  `pass_tec` varchar(150) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+  `id_rol` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_tec`),
+  KEY `id_rol` (`id_rol`),
+  CONSTRAINT `teccnico_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla cjn_ticket.tecnico: ~5 rows (aproximadamente)
-INSERT INTO `tecnico` (`id_tec`, `nom_tec`) VALUES
-	(1, 'hanz'),
-	(2, 'frederick'),
-	(3, 'segundo'),
-	(4, 'carlos'),
-	(5, 'kevin');
+INSERT INTO `tecnico` (`id_tec`, `nom_tec`, `pass_tec`, `id_rol`) VALUES
+	(1, 'hanz', 'hanz', 2),
+	(2, 'frederick', 'frederick', 2),
+	(3, 'segundo', 'segundo', 2),
+	(4, 'carlos', 'carlos', 2),
+	(5, 'kevin', 'kevin', 1);
 
 -- Volcando estructura para tabla cjn_ticket.ticket
 CREATE TABLE IF NOT EXISTS `ticket` (
@@ -120,8 +149,11 @@ CREATE TABLE IF NOT EXISTS `ticket` (
   `id_esta` int(11) DEFAULT 4,
   `id_tec` int(11) DEFAULT NULL,
   `id_piso` int(11) DEFAULT NULL,
+  `capture_time` timestamp NULL DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT current_timestamp(),
+  `close_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT current_timestamp(),
+  `observed_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_ticket`),
   KEY `id_usu` (`id_usu`),
   KEY `id_tipo` (`id_tipo`),
@@ -137,17 +169,29 @@ CREATE TABLE IF NOT EXISTS `ticket` (
   CONSTRAINT `ticket_ibfk_5` FOREIGN KEY (`id_esta`) REFERENCES `estado` (`id_esta`),
   CONSTRAINT `ticket_ibfk_6` FOREIGN KEY (`id_tec`) REFERENCES `tecnico` (`id_tec`),
   CONSTRAINT `ticket_ibfk_7` FOREIGN KEY (`id_piso`) REFERENCES `piso` (`id_piso`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla cjn_ticket.ticket: ~0 rows (aproximadamente)
-INSERT INTO `ticket` (`id_ticket`, `num_ticket`, `descrip_ticket`, `img_ticket`, `id_usu`, `id_tipo`, `id_prio`, `id_cat`, `id_esta`, `id_tec`, `id_piso`, `created_time`, `update_time`) VALUES
-	(1, 'T-0001', 'PRUEBA', NULL, 2, 1, NULL, NULL, 4, NULL, 4, '2025-01-18 14:33:23', '2025-01-18 14:33:23'),
-	(2, 'T-0002', 'no prende pc', '', 6, 2, NULL, NULL, 4, NULL, 2, '2025-01-18 22:16:54', '2025-01-18 22:16:54'),
-	(3, 'T-0003', 'prueba prueba', '', 6, 1, NULL, NULL, 4, NULL, 4, '2025-01-18 22:26:34', '2025-01-18 22:26:34'),
-	(4, 'T-0004', 'TEST 004', '', 6, 2, NULL, NULL, 4, NULL, 2, '2025-01-18 23:16:27', '2025-01-18 23:16:27'),
-	(5, 'T-0005', 'TESTE  05', '', 6, 3, NULL, NULL, 4, NULL, 3, '2025-01-18 23:21:52', '2025-01-18 23:21:52'),
-	(6, 'T-0006', 'chanchito', '', 6, 2, NULL, NULL, 4, NULL, 3, '2025-01-19 00:03:38', '2025-01-19 00:03:38'),
-	(7, 'T-0007', 'chanchicooooo', '', 6, 4, NULL, NULL, 4, NULL, 4, '2025-01-19 00:04:36', '2025-01-19 00:04:36');
+-- Volcando datos para la tabla cjn_ticket.ticket: ~19 rows (aproximadamente)
+INSERT INTO `ticket` (`id_ticket`, `num_ticket`, `descrip_ticket`, `img_ticket`, `id_usu`, `id_tipo`, `id_prio`, `id_cat`, `id_esta`, `id_tec`, `id_piso`, `capture_time`, `created_time`, `close_time`, `update_time`, `observed_time`) VALUES
+	(1, 'T-0001', 'PRUEBA', NULL, 2, 1, 2, 2, 1, 2, 4, '2025-01-25 00:15:30', '2025-01-18 14:33:23', NULL, '2025-01-18 14:33:23', NULL),
+	(2, 'T-0002', 'no prende pc', '', 6, 2, 1, 1, 1, 1, 2, NULL, '2025-01-18 22:16:54', NULL, '2025-01-18 22:16:54', NULL),
+	(3, 'T-0003', 'prueba prueba', '', 6, 1, NULL, NULL, 1, NULL, 4, NULL, '2025-01-18 22:26:34', NULL, '2025-01-18 22:26:34', NULL),
+	(4, 'T-0004', 'TEST 004', '', 6, 2, NULL, NULL, 1, NULL, 2, NULL, '2025-01-18 23:16:27', NULL, '2025-01-18 23:16:27', NULL),
+	(5, 'T-0005', 'TESTE  05', '', 6, 3, NULL, NULL, 1, NULL, 3, NULL, '2025-01-18 23:21:52', NULL, '2025-01-18 23:21:52', NULL),
+	(6, 'T-0006', 'chanchito', '', 6, 2, NULL, NULL, 1, NULL, 3, NULL, '2025-01-19 00:03:38', NULL, '2025-01-19 00:03:38', NULL),
+	(7, 'T-0007', 'chanchicooooo', '', 6, 4, NULL, NULL, 1, NULL, 4, NULL, '2025-01-19 00:04:36', NULL, '2025-01-19 00:04:36', NULL),
+	(8, 'T-0008', 'viviana', '', 6, 5, NULL, NULL, 1, NULL, 3, NULL, '2025-01-20 13:33:36', NULL, '2025-01-20 13:33:36', NULL),
+	(9, 'T-0009', 'kevin', '', 2, 4, NULL, NULL, 1, NULL, 4, NULL, '2025-01-20 14:27:52', NULL, '2025-01-20 14:27:52', NULL),
+	(10, 'T-00010', 'AIO de Emergencia Pediatrico con lineas en la pantalla y lenta para el procedimiento', '', 2, 2, NULL, NULL, 1, NULL, 1, NULL, '2025-01-20 14:40:49', NULL, '2025-01-20 14:40:49', NULL),
+	(11, 'T-00011', 'holi ', '', 6, 8, NULL, NULL, 1, NULL, 3, NULL, '2025-01-20 17:33:10', NULL, '2025-01-20 17:33:10', NULL),
+	(12, 'T-00012', 'sexio', '', 4, 9, NULL, NULL, 1, NULL, 7, NULL, '2025-01-21 20:10:39', NULL, '2025-01-21 20:10:39', NULL),
+	(13, 'T-00013', 'sad', '', 2, 1, NULL, NULL, 1, NULL, 1, NULL, '2025-01-21 20:11:07', NULL, '2025-01-21 20:11:07', NULL),
+	(14, 'T-00014', ',mczvxn bplñ', '', 2, 1, NULL, NULL, 1, NULL, 1, NULL, '2025-01-21 20:17:41', NULL, '2025-01-21 20:17:41', NULL),
+	(15, 'T-00015', '65764', '', 6, 1, NULL, NULL, 1, NULL, 1, NULL, '2025-01-21 20:27:05', NULL, '2025-01-21 20:27:05', NULL),
+	(16, 'T-00016', 'ktorresa', '', 2, 3, 1, 1, 4, 1, 6, NULL, '2025-01-22 21:05:00', NULL, '2025-01-22 21:05:00', NULL),
+	(17, 'T-00017', 't', '', 6, 2, NULL, NULL, 4, NULL, 3, '2025-01-24 22:30:14', '2025-01-24 22:30:14', NULL, '2025-01-24 22:30:14', NULL),
+	(18, 'T-00018', 'chakanica', '', 5, 1, NULL, NULL, 4, NULL, 6, '2025-01-24 23:48:46', '2025-01-24 23:48:46', NULL, '2025-01-24 23:48:46', NULL),
+	(19, 'T-00019', 'dhasd', '', 4, 2, 1, 1, 1, 5, 1, '2025-01-28 22:05:22', '2025-01-25 00:10:29', NULL, '2025-01-25 00:10:29', NULL);
 
 -- Volcando estructura para tabla cjn_ticket.tipo
 CREATE TABLE IF NOT EXISTS `tipo` (
@@ -179,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `update_time` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_usu`),
   KEY `id_area` (`id_area`),
-  CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_area`) REFERENCES `area` (`id_area`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_area`) REFERENCES `area` (`id_area`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla cjn_ticket.usuario: ~5 rows (aproximadamente)
