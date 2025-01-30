@@ -121,7 +121,7 @@ class ModeloDashboard
     public function tecnico()
     {
         try {
-            $sql = "SELECT * FROM tecnico";
+            $sql = "SELECT * FROM tecnico WHERE id_rol NOT IN ('1')";
             $stm = $this->MYSQL->ConectarBD()->prepare($sql);
             $stm->execute();
             return $stm->fetchAll(PDO::FETCH_OBJ);
@@ -133,7 +133,7 @@ class ModeloDashboard
     public function estado()
     {
         try {
-            $sql = "SELECT * FROM estado";
+            $sql = "SELECT * FROM estado WHERE id_esta NOT IN ('4')";
             $stm = $this->MYSQL->ConectarBD()->prepare($sql);
             $stm->execute();
             return $stm->fetchAll(PDO::FETCH_OBJ);

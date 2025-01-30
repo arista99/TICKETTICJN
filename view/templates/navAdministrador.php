@@ -16,10 +16,13 @@
       <ul class="navbar-nav ms-auto">
         <!-- Otras opciones de menú (si necesitas) -->
         <li class="nav-item">
-          <a class="nav-link" href="visorAdministrador">Alertas</a>
+          <a class="nav-link" href="visorAdministrador">Panel de Control</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="DashboardControl">Control de Incidencia</a>
+          <a class="nav-link" href="DashboardControl">Usuarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Perfiles</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Control de Tiempos</a>

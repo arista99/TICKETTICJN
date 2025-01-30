@@ -51,6 +51,7 @@
                 <th class="text-center">N° ticket</th>
                 <th class="text-center">Usuario</th>
                 <th class="text-center">Piso</th>
+                <th class="text-center">Area</th>
                 <th class="text-center">Descripcion</th>
                 <th class="text-center">Tipo</th>
                 <th class="text-center">Tecnico</th>

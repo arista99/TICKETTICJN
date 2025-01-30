@@ -21,18 +21,29 @@ class ControlIndex
         $tipo = $this->SOLICITUD->tipo();
         $piso = $this->SOLICITUD->piso();
 
-        //contando las filas que hay 
-        $count = $this->SOLICITUD->rowCount();
 
-        if ($count->numer_ticket == 0) {
-            $suma = 'T-0001';
-        } else if ($count->numer_ticket == 1) {
-            $suma = 'T-0002';
-        } else if ($count->numer_ticket >= 2){
-            $suma = 'T-000'.$count->numer_ticket+1;
-        }
         // var_dump($ticketID);
         include_once('view/solicitud.php');
+    }
+
+    //METODO PARA DEVOLVER EL NUMERO DE TICKETS
+    public function obtenerTickets()
+    {
+        try {
+            //contando las filas que hay 
+            $count = $this->SOLICITUD->rowCount();
+
+            if ($count->numer_ticket == 0) {
+                $suma = 'T-0001';
+            } else if ($count->numer_ticket == 1) {
+                $suma = 'T-0002';
+            } else if ($count->numer_ticket >= 2) {
+                $suma = 'T-000' . $count->numer_ticket + 1;
+            } 
+            echo  $suma;
+        } catch (Exception $th) {
+            echo $th->getMessage();
+        }
     }
 
     //METODO PARA DEVOLVER DATOS VIA AJAX
@@ -71,8 +82,6 @@ class ControlIndex
             } else {
                 header('Location:Index');
             }
-
-            
         } catch (Exception $th) {
             echo $th->getMessage();
         }

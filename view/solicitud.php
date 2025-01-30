@@ -1,9 +1,9 @@
 <?php include_once('view/templates/head.php'); ?>
 
-<div class="container">
+<div class="container d-flex justify-content-center align-items-center vh-100">
 
     <!-- Outer Row -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center w-100">
         
         <div class="col-xl-6 col-lg-12 col-md-9">
             <div class="card o-hidden border-5 shadow-lg my-5">
@@ -16,11 +16,11 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">¡INGRESA TU SOLICITUD!</h1>
                                 </div>
-
+                                <!-- <?php echo $suma ?> -->
                                 <form action="solicitud" id="" method="POST" class="row g-3" enctype="multipart/form-data">
                                     <div class="col-md-6">
                                         <label for="cbo_nom" class="form-label">N°</label>
-                                        <input type="text" class="form-control" id="cbo_nom" name="cbo_nom" value="<?php echo $suma ?>" readonly>
+                                        <input type="text" class="form-control" id="cbo_nom" name="cbo_nom" value="" readonly>
                                     </div>
                                     <div class="col-md-8">
                                         <label for="cbo_tipo" class="form-label">Tipo</label>
