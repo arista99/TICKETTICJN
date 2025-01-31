@@ -37,40 +37,6 @@ class ModeloDashboard
         }
     }
 
-    /*******************************************Alerta Ticket********************************************/
-    // public function listaticket($ultimoTicketId = null)
-    // {
-    //     try {
-    //         $sql = "SELECT ti.id_ticket,ti.num_ticket, ti.descrip_ticket,ti.descrip_ticket,u.nom_usu,t.nom_tipo,e.nom_esta,p.num_piso
-    //                 FROM ticket AS ti
-    //                 INNER JOIN usuario AS u ON ti.id_usu=u.id_usu
-    //                 INNER JOIN tipo AS t ON ti.id_tipo=t.id_tipo
-    //                 INNER JOIN estado AS e ON ti.id_esta=e.id_esta
-    //                 INNER JOIN piso AS p ON ti.id_piso=p.id_piso
-    //                 WHERE e.id_esta = '4'";
-    //         // Agregar filtro para registros más recientes
-    //         if ($ultimoTicketId !== null) {
-    //             $sql .= " AND ti.id_ticket > :ultimoTicketId";
-    //         }
-
-    //         $sql .= " ORDER BY ti.id_ticket ASC";
-
-    //         $stm = $this->MYSQL->ConectarBD()->prepare($sql);
-
-    //         if ($ultimoTicketId !== null) {
-    //             $stm->bindParam(':ultimoTicketId', $ultimoTicketId, PDO::PARAM_INT);
-    //         }
-
-    //         $stm->execute();
-    //         return $stm->fetchAll(PDO::FETCH_OBJ);
-    //         // $stm = $this->MYSQL->ConectarBD()->prepare($sql);
-    //         // $stm->execute();
-    //         // return $stm->fetchAll(PDO::FETCH_OBJ);
-    //     } catch (Exception $th) {
-    //         echo $th->getMessage();
-    //     }
-    // }
-
     /*******************************************Actualizar Solicitud********************************************/
     public function updateTicket(Ticket $ticket)
     {

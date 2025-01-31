@@ -15,6 +15,7 @@ class ControlIndex
     {
         $this->SOLICITUD = new ModeloSolicitud();
     }
+    
     public function Index()
     {
         $area = $this->SOLICITUD->area();

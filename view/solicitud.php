@@ -16,7 +16,6 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">¡INGRESA TU SOLICITUD!</h1>
                                 </div>
-                                <!-- <?php echo $suma ?> -->
                                 <form action="solicitud" id="" method="POST" class="row g-3" enctype="multipart/form-data">
                                     <div class="col-md-6">
                                         <label for="cbo_nom" class="form-label">N°</label>

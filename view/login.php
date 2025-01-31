@@ -16,10 +16,6 @@
                             <label for="contrasena" class="form-label">Contraseña</label>
                             <input type="password" id="contrasena" name="contrasena" class="form-control" placeholder="Contraseña" required>
                         </div>
-                        <!-- <div class="form-check mb-4">
-                            <input type="checkbox" class="form-check-input" id="customCheck">
-                            <label class="form-check-label" for="customCheck">Recordar</label>
-                        </div> -->
                         <button id="btn-loginU" class="btn btn-primary w-100">INGRESAR</button>
                     </form>
                     <hr>
